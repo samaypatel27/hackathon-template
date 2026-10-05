@@ -1,5 +1,23 @@
 # Hackathon Starter: React + FastAPI + Claude + Supabase
 
+## Quick start (already set up?)
+
+If setup is already complete, run these in two terminals from the repo root:
+
+**Terminal 1 (backend):**
+```powershell
+cd backend; .\venv\Scripts\python -m uvicorn main:app --reload --port 5000
+```
+
+**Terminal 2 (frontend):**
+```powershell
+cd frontend; npm run dev
+```
+
+Then open http://localhost:5173 (app) and http://localhost:5000/docs (API docs).
+
+**Not set up yet?** Skip to [Quickstart (setup wizard)](#3-quickstart-setup-wizard) below.
+
 ## 1. What this is
 
 A ready-to-run full-stack template: a React (Vite + TypeScript) frontend, a FastAPI backend that calls Claude through the Anthropic API, and Google sign-in backed by Supabase Auth. A setup wizard writes your config and installs everything. Then the app's home page checks your environment: when every row shows a green ✓, you're ready to build.
