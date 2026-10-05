@@ -2,17 +2,22 @@
 .env
 .env.local
 .env.*.local
+backend/.env
+frontend/.env
 
 # Python
 venv/
 .venv/
+backend/venv/
 __pycache__/
 *.py[cod]
 .pytest_cache/
 
 # Node
 node_modules/
+frontend/node_modules/
 dist/
+frontend/dist/
 *.log
 
 # OS / editors
