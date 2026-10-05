@@ -1,0 +1,143 @@
+:root {
+  --bg: #f6f7f9;
+  --card: #ffffff;
+  --text: #1a1d23;
+  --muted: #667085;
+  --border: #e4e7ec;
+  --input: #ffffff;
+  --pass: #12b76a;
+  --pass-bg: #ecfdf3;
+  --fail: #f04438;
+  --fail-bg: #fef3f2;
+  --warn-bg: #fffaeb;
+  --warn: #b54708;
+  --accent: #2563eb;
+  --code-bg: #f2f4f7;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f1115;
+    --card: #181b21;
+    --text: #e6e8eb;
+    --muted: #98a2b3;
+    --border: #2a2f38;
+    --input: #111318;
+    --pass-bg: #0f2a1d;
+    --fail-bg: #2d1414;
+    --warn-bg: #2b220d;
+    --warn: #fdb022;
+    --accent: #4f8cff;
+    --code-bg: #22262e;
+  }
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); }
+main { max-width: 820px; margin: 0 auto; padding: 32px 16px 64px; }
+h1 { margin: 0 0 6px; }
+h2 { margin: 0 0 12px; display: flex; align-items: center; gap: 10px; }
+h3 { margin: 0 0 6px; font-size: 1rem; }
+a { color: var(--accent); }
+code { background: var(--code-bg); padding: 1px 5px; border-radius: 4px; font-size: 0.88em; }
+.muted { color: var(--muted); }
+.help { color: var(--muted); font-size: 0.92rem; line-height: 1.5; margin: 0 0 14px; padding-left: 0; }
+ol.help { padding-left: 20px; }
+
+.banner {
+  margin-top: 14px; padding: 12px 14px; border-radius: 10px;
+  background: var(--card); border: 1px solid var(--border); font-size: 0.9rem; line-height: 1.6;
+}
+
+.stepper { display: flex; gap: 6px; margin: 22px 0 14px; flex-wrap: wrap; }
+.stepper button {
+  flex: 1; min-width: 120px; display: flex; align-items: center; gap: 8px;
+  background: var(--card); color: var(--muted); border: 1px solid var(--border);
+  padding: 8px 10px; font-weight: 500;
+}
+.stepper button.active { color: var(--text); border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+.stepper .dot {
+  width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center;
+  font-size: 0.78rem; border: 1px solid var(--border); flex-shrink: 0;
+}
+.stepper button.done .dot { background: var(--pass); border-color: var(--pass); color: #fff; }
+
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 22px; }
+.subcard { margin-top: 22px; padding-top: 18px; border-top: 1px dashed var(--border); }
+.phase { margin-top: 22px; }
+
+label { display: block; font-weight: 600; font-size: 0.9rem; margin-bottom: 14px; }
+input {
+  display: block; width: 100%; margin-top: 6px; padding: 9px 11px; font: inherit; font-weight: 400;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.88rem;
+  border: 1px solid var(--border); border-radius: 8px; background: var(--input); color: var(--text);
+}
+input:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
+input[readonly] { background: var(--code-bg); }
+.secret { display: flex; gap: 6px; align-items: stretch; }
+.secret input { flex: 1; min-width: 0; }
+.secret button { margin-top: 6px; }
+
+button {
+  border: 1px solid var(--border); border-radius: 8px; padding: 8px 16px; font: inherit; font-weight: 600;
+  cursor: pointer; background: var(--card); color: var(--text); white-space: nowrap;
+}
+button.primary, .actions button { background: var(--accent); color: #fff; border-color: var(--accent); }
+button.ghost { background: transparent; color: var(--muted); font-weight: 500; padding: 8px 12px; }
+button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.actions { display: flex; gap: 8px; margin: 4px 0 10px; }
+.nav { display: flex; justify-content: space-between; margin-top: 26px; padding-top: 16px; border-top: 1px solid var(--border); }
+
+.result-box {
+  display: flex; gap: 10px; align-items: flex-start; padding: 10px 12px; border-radius: 8px;
+  font-size: 0.9rem; line-height: 1.45; margin-top: 6px;
+}
+.result-box.pass { background: var(--pass-bg); }
+.result-box.fail { background: var(--fail-bg); }
+.result-box.loading, .result-box.pending { background: var(--code-bg); }
+.result-text { padding-top: 3px; word-break: break-word; }
+.warning { margin-top: 6px; padding: 8px 12px; border-radius: 8px; background: var(--warn-bg); color: var(--warn); font-size: 0.88rem; }
+.hint { margin-top: 6px; font-size: 0.85rem; color: var(--muted); }
+
+.icon {
+  width: 24px; height: 24px; border-radius: 50%; display: inline-grid; place-items: center;
+  font-weight: 700; font-size: 0.85rem; flex-shrink: 0;
+}
+.icon.pass { background: var(--pass); color: #fff; }
+.icon.fail { background: var(--fail); color: #fff; }
+.icon.idle { border: 2px dashed var(--border); color: var(--muted); }
+.icon.big { width: 32px; height: 32px; font-size: 1.1rem; }
+.spinner {
+  width: 24px; height: 24px; flex-shrink: 0; border-radius: 50%;
+  border: 3px solid var(--border); border-top-color: var(--accent); animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.summary { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+.summary th { text-align: left; color: var(--muted); font-weight: 500; padding: 6px 8px; border-bottom: 1px solid var(--border); }
+.summary td { padding: 7px 8px; border-bottom: 1px solid var(--border); word-break: break-all; }
+.summary td:first-child { white-space: nowrap; word-break: normal; }
+.summary td:nth-child(2) { font-family: ui-monospace, Menlo, Consolas, monospace; }
+.summary tr.missing td:nth-child(2) { color: var(--fail); }
+
+.install-steps { list-style: none; padding: 0; margin: 10px 0; }
+.install-steps li { display: flex; align-items: center; gap: 10px; padding: 4px 0; }
+.log {
+  background: #0b0d10; color: #d0d5dd; padding: 12px; border-radius: 8px; font-size: 0.78rem;
+  height: 280px; overflow: auto; white-space: pre-wrap; word-break: break-all; margin: 8px 0;
+}
+.log .err { color: #fda29b; }
+
+.tabs { display: flex; gap: 6px; margin: 14px 0 4px; }
+.tabs button.active { border-color: var(--accent); color: var(--accent); }
+.label { margin: 14px 0 4px; font-weight: 600; font-size: 0.88rem; }
+pre.cmd { background: var(--code-bg); padding: 12px; border-radius: 8px; overflow-x: auto; margin: 0; font-size: 0.85rem; }
+
+@media (max-width: 560px) {
+  .stepper button { min-width: 0; flex-basis: 30%; font-size: 0.8rem; }
+  .card { padding: 16px; }
+}

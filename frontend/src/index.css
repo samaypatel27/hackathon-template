@@ -1,0 +1,199 @@
+:root {
+  --bg: #f6f7f9;
+  --card: #ffffff;
+  --text: #1a1d23;
+  --muted: #667085;
+  --border: #e4e7ec;
+  --pass: #12b76a;
+  --pass-bg: #ecfdf3;
+  --fail: #f04438;
+  --fail-bg: #fef3f2;
+  --accent: #2563eb;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f1115;
+    --card: #181b21;
+    --text: #e6e8eb;
+    --muted: #98a2b3;
+    --border: #2a2f38;
+    --pass-bg: #0f2a1d;
+    --fail-bg: #2d1414;
+    --accent: #4f8cff;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+}
+
+main {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 40px 16px;
+}
+
+header h1 {
+  margin: 0 0 4px;
+}
+
+h2 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+a {
+  color: var(--accent);
+}
+
+code {
+  font-size: 0.85em;
+}
+
+.muted {
+  color: var(--muted);
+  margin: 2px 0 0;
+  font-size: 0.9rem;
+}
+
+.small {
+  font-size: 0.85rem;
+  margin-top: 12px;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  margin-top: 16px;
+}
+
+.card-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.card-title {
+  flex: 1;
+  min-width: 0;
+}
+
+button,
+.button {
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  background: var(--accent);
+  color: #fff;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+button.secondary {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.icon.pass {
+  background: var(--pass);
+  color: #fff;
+}
+
+.icon.fail {
+  background: var(--fail);
+  color: #fff;
+}
+
+.icon.idle {
+  border: 2px dashed var(--border);
+  color: var(--muted);
+}
+
+.spinner {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.out {
+  margin: 12px 0 0;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-height: 260px;
+  overflow: auto;
+}
+
+.out.pass {
+  background: var(--pass-bg);
+  border-left: 3px solid var(--pass);
+}
+
+.out.fail {
+  background: var(--fail-bg);
+  border-left: 3px solid var(--fail);
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+  padding: 12px;
+  border-radius: 8px;
+  background: var(--pass-bg);
+}
+
+.user img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+@media (max-width: 520px) {
+  .card-head {
+    flex-wrap: wrap;
+  }
+}

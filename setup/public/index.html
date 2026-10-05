@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Setup Wizard</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>Hackathon Starter Setup</h1>
+        <p class="muted">
+          Fill in your keys, test them, then let this page write the <code>.env</code> files and install everything.
+          Nothing is saved to disk until you click <b>Generate .env files</b> in step 4.
+        </p>
+        <div id="banner" class="banner" hidden></div>
+      </header>
+
+      <nav id="stepper" class="stepper" aria-label="Setup steps">
+        <button data-goto="1"><span class="dot">1</span>Anthropic</button>
+        <button data-goto="2"><span class="dot">2</span>Supabase</button>
+        <button data-goto="3"><span class="dot">3</span>Google OAuth</button>
+        <button data-goto="4"><span class="dot">4</span>Write &amp; Install</button>
+        <button data-goto="5"><span class="dot">5</span>Done</button>
+      </nav>
+
+      <!-- Step 1: Anthropic -->
+      <section class="card" data-step="1">
+        <h2>1. Anthropic API key</h2>
+        <p class="help">
+          Create a key at <a href="https://console.anthropic.com/settings/keys" target="_blank" rel="noreferrer">console.anthropic.com → API Keys</a>.
+          It starts with <code>sk-ant-</code>. Your account needs a few dollars of credit for the test call.
+        </p>
+        <label>
+          API key
+          <div class="secret">
+            <input id="ANTHROPIC_API_KEY" type="password" autocomplete="off" spellcheck="false" placeholder="sk-ant-..." />
+            <button type="button" class="ghost" data-toggle="ANTHROPIC_API_KEY">Show</button>
+          </div>
+        </label>
+        <div class="actions">
+          <button data-test="anthropic">Test Key</button>
+        </div>
+        <div class="result" data-result="anthropic"></div>
+        <div class="nav"><span></span><button class="primary" data-goto="2">Next →</button></div>
+      </section>
+
+      <!-- Step 2: Supabase -->
+      <section class="card" data-step="2" hidden>
+        <h2>2. Supabase</h2>
+        <ol class="help">
+          <li>Create a project at <a href="https://supabase.com/dashboard" target="_blank" rel="noreferrer">supabase.com/dashboard</a> (wait ~1 min for it to provision).</li>
+          <li><b>Project URL:</b> Project Settings → Data API (or the <b>Connect</b> button at the top). Looks like <code>https://abcdefgh.supabase.co</code>.</li>
+          <li><b>Keys:</b> Project Settings → API Keys. Use the <b>anon / publishable</b> key and the <b>service_role / secret</b> key. The service role key stays in the backend only.</li>
+          <li>Also enable Google: Authentication → Sign In / Providers → <b>Google</b>. Paste the Google Client ID + Secret from step 3 there.</li>
+        </ol>
+        <label>
+          Project URL
+          <input id="SUPABASE_URL" type="url" autocomplete="off" spellcheck="false" placeholder="https://abcdefgh.supabase.co" />
+        </label>
+        <label>
+          anon / publishable key
+          <div class="secret">
+            <input id="SUPABASE_ANON_KEY" type="password" autocomplete="off" spellcheck="false" placeholder="eyJ... or sb_publishable_..." />
+            <button type="button" class="ghost" data-toggle="SUPABASE_ANON_KEY">Show</button>
+          </div>
+        </label>
+        <label>
+          service_role / secret key
+          <div class="secret">
+            <input id="SUPABASE_SERVICE_ROLE_KEY" type="password" autocomplete="off" spellcheck="false" placeholder="eyJ... or sb_secret_..." />
+            <button type="button" class="ghost" data-toggle="SUPABASE_SERVICE_ROLE_KEY">Show</button>
+          </div>
+        </label>
+        <div class="actions">
+          <button data-test="supabase">Test Connection</button>
+        </div>
+        <div class="result" data-result="supabase"></div>
+        <div class="nav"><button data-goto="1">← Back</button><button class="primary" data-goto="3">Next →</button></div>
+      </section>
+
+      <!-- Step 3: Google OAuth -->
+      <section class="card" data-step="3" hidden>
+        <h2>3. Google OAuth</h2>
+        <ol class="help">
+          <li>In <a href="https://console.cloud.google.com/apis/credentials" target="_blank" rel="noreferrer">Google Cloud Console → APIs &amp; Services → Credentials</a>, set up the <b>OAuth consent screen</b> (External). While it's in Testing mode, add your Google account under <b>Test users</b>.</li>
+          <li><b>Create credentials → OAuth client ID → Web application.</b></li>
+          <li>Under <b>Authorized redirect URIs</b>, add the URI below. Copy it with the button so it matches exactly.</li>
+          <li>Click Create, then copy the <b>Client ID</b> and <b>Client secret</b> here.</li>
+        </ol>
+        <label>
+          Redirect URI to register in Google Cloud Console (read-only)
+          <div class="secret">
+            <input id="redirect-uri" type="text" readonly />
+            <button type="button" class="ghost" id="copy-redirect">Copy</button>
+          </div>
+        </label>
+        <label>
+          Client ID
+          <input id="GOOGLE_CLIENT_ID" type="text" autocomplete="off" spellcheck="false" placeholder="1234567890-abc123.apps.googleusercontent.com" />
+        </label>
+        <label>
+          Client secret
+          <div class="secret">
+            <input id="GOOGLE_CLIENT_SECRET" type="password" autocomplete="off" spellcheck="false" placeholder="GOCSPX-..." />
+            <button type="button" class="ghost" data-toggle="GOOGLE_CLIENT_SECRET">Show</button>
+          </div>
+        </label>
+        <div class="actions">
+          <button data-test="google">Validate</button>
+        </div>
+        <div class="result" data-result="google"></div>
+
+        <div class="subcard">
+          <h3>Optional: confirm the redirect URI with a real sign-in</h3>
+          <p class="help">
+            Google only checks the redirect URI during a real sign-in. This opens Google in a new tab. If you land on a
+            green ✓ page, the URI is registered correctly. Port 5000 must be free (don't start the backend yet).
+          </p>
+          <div class="actions">
+            <button data-test="redirect">Test redirect URI</button>
+          </div>
+          <div class="result" data-result="redirect"></div>
+        </div>
+        <div class="nav"><button data-goto="2">← Back</button><button class="primary" data-goto="4">Next →</button></div>
+      </section>
+
+      <!-- Step 4: Write & Install -->
+      <section class="card" data-step="4" hidden>
+        <h2>4. Write &amp; Install</h2>
+        <table class="summary" id="summary"></table>
+
+        <div class="phase">
+          <h3>a. Write the config files</h3>
+          <p class="help">
+            Creates <code>backend/.env</code> and <code>frontend/.env</code>. If they already exist, only these keys are
+            updated and anything else you added is kept.
+          </p>
+          <div class="actions"><button class="primary" id="write-env">Generate .env files</button></div>
+          <div class="result" id="write-result"></div>
+        </div>
+
+        <div class="phase">
+          <h3>b. Install dependencies</h3>
+          <p class="help">
+            Runs <code>npm install</code> in <code>frontend/</code>, and creates <code>backend/venv</code> + runs
+            <code>pip install -r requirements.txt</code>. Takes 1–3 minutes.
+          </p>
+          <div class="actions"><button class="primary" id="install" disabled>Install dependencies</button></div>
+          <ul class="install-steps">
+            <li data-install="frontend"><span class="icon idle">•</span> Frontend: npm install</li>
+            <li data-install="backend"><span class="icon idle">•</span> Backend: venv + pip install</li>
+          </ul>
+          <pre id="log" class="log" hidden></pre>
+          <div class="result" id="install-result"></div>
+        </div>
+
+        <div class="nav"><button data-goto="3">← Back</button><button class="primary" id="finish" disabled>You're done →</button></div>
+      </section>
+
+      <!-- Step 5: Done -->
+      <section class="card" data-step="5" hidden>
+        <h2><span class="icon pass big">✓</span> Setup complete</h2>
+        <p>Everything is configured and installed. You can stop this wizard (Ctrl+C in its terminal). From now on you only need these two commands, each in its own terminal, starting from the repo folder:</p>
+
+        <div class="tabs" id="os-tabs">
+          <button data-os="unix">macOS / Linux</button>
+          <button data-os="win">Windows (PowerShell)</button>
+        </div>
+        <div data-os-panel="unix">
+          <p class="label">Terminal 1: backend</p>
+          <pre class="cmd">cd backend &amp;&amp; source venv/bin/activate &amp;&amp; uvicorn main:app --reload --port 5000</pre>
+          <p class="label">Terminal 2: frontend</p>
+          <pre class="cmd">cd frontend &amp;&amp; npm run dev</pre>
+        </div>
+        <div data-os-panel="win" hidden>
+          <p class="label">Terminal 1: backend</p>
+          <pre class="cmd">cd backend; .\venv\Scripts\python -m uvicorn main:app --reload --port 5000</pre>
+          <p class="label">Terminal 2: frontend</p>
+          <pre class="cmd">cd frontend; npm run dev</pre>
+        </div>
+
+        <p>Once both are running:</p>
+        <ul>
+          <li>App (environment-check dashboard): <code>http://localhost:5173</code></li>
+          <li>API docs (Swagger UI): <code>http://localhost:5000/docs</code></li>
+        </ul>
+        <p class="muted">Click every <b>Run</b> button on the app page and sign in with Google. All green means you're ready to build.</p>
+        <div class="nav"><button data-goto="4">← Back</button><span></span></div>
+      </section>
+    </main>
+    <script src="/app.js"></script>
+  </body>
+</html>
